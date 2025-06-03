@@ -1,0 +1,240 @@
+/* modal.css */
+
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 40px 0;
+  background: rgba(0,0,0,0.6);
+  /* Stop centering vertically – pin to top */
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  /* allow the modal content itself to scroll */
+  overflow-y: auto;
+  padding: 40px 0;             /* give some top/bottom breathing room */
+  z-index: 100;
+}
+.modal-overlay.hidden {
+  display: none;
+}
+
+
+.container { max-width: 900px; margin: 40px auto; padding: 40px; background-color: rgb(248,248,248); position: relative;}
+.close-btn {
+  position: absolute;
+  top: 35px;  
+  right: 35px; 
+  background: none; 
+  border: none;   
+  font-size: 1.7rem; 
+  line-height: 1;
+  cursor: pointer;
+  color: #666;   
+  padding: 4px;         /* makes hit area a bit bigger */
+}
+.close-btn:hover {
+  color: #000; 
+}
+.label {
+  display: block;
+  font-size: 0.6rem;
+  color: #9e9e9e;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.divider {
+  width: 1px;
+  background: #ccc;
+  align-self: stretch;
+}
+.divider-horizontal {
+  width: 100%;
+  height: 1px;
+  background: #ccc;
+}
+.value {
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+/* ---------------------------------- */
+/* 1. Header */
+.header {
+  display: flex;
+  align-items: flex-start;
+}
+.header .title {
+  margin-top: 0px;
+  font-size: 2.25rem; /* ~36px */
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.header .date {
+  font-size: 2rem;
+  font-weight: 100;
+  line-height: 1;
+}
+.header .info {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 40px;
+  align-items: flex-end;
+  margin-left: 40px;
+}
+.header .info .value {
+  font-size: 2rem;
+}
+.header .divider {
+  flex: 0 0 1px;
+  background: #ccc;
+  align-self: stretch;
+}
+.header .headline {
+  flex: 1 1 auto;
+  margin-bottom: 50px;
+}
+.header .info .block {
+  text-align: left;
+  margin-bottom: 25px;
+  margin-top: 100px;
+}
+/* 2. Key Facts Strip */
+.facts {
+  display: flex;
+  gap: 60px;
+  margin-bottom: 24px;
+  margin-top: 24px;
+}
+.fact {
+  text-align: left;
+}
+/* 3. Object Description */
+.object-description {
+  display: flex;
+  align-items: flex-start;
+    margin-bottom: 30px;
+}
+.object-description .spacer {
+  flex: 0 0 200px;            /* give it whatever “negative” width you want */
+}
+.object-description .divider {
+  flex: 0 0 1px;
+  background: #ccc;
+  align-self: stretch;
+}
+.object-description .text-content {
+  flex: 1 1 auto;
+  margin-top: 28px;
+  margin-left: 28px;
+  margin-bottom: 50px;
+}
+.object-description .text {
+  font-size: 0.95rem;
+  color: #222;
+}
+/* 4. Visual + Caption */
+.visual {
+  background-color: #ddd;
+  width: calc(100% + 80px);
+  margin-left: -40px;
+  margin-right: -40px;
+  height: auto;
+  margin-bottom: 0;
+  position: relative;
+}
+.caption {
+  background-color: #999;
+  width: calc(100% + 80px);
+  margin-left: -40px;
+  margin-right: -40px;
+  color: #fff;
+  font-size: 0.875rem;
+  padding: 8px 40px;
+  margin-bottom: 24px;
+}
+/* 5. Story Section */
+.story {
+  margin-bottom: 50px;
+  margin-top: 100px;
+}
+.story-content {
+  /* create a “block formatting context” so floats clear themselves */
+  overflow: hidden;  
+}
+.story-title {
+  margin-bottom: 24px;
+}
+.story-content .quote {
+  float: right;           /* or left, whichever side you prefer */
+  width: 50%;             /* adjust to taste */
+  margin: 0 0 1em 1em;    /* space around it: bottom & left in this example */
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+/* quote source stays as-is */
+.story-content .quote .source {
+  display: block;
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 8px;
+}
+/* your paragraph typography */
+.story-content p {
+  font-size: 0.95rem;
+  color: #222;
+  margin-top: 0;
+}
+/* 6. Footer Metadata */
+.footer {
+  display: grid;
+  grid-template-columns: auto auto 1px 1fr;
+  gap: 40px;
+  font-size: 0.875rem;
+  color: #444;
+}
+.footer .notes {
+  margin-top: 24px;
+  font-size: 0.75rem;
+  color: #666;
+  line-height: 1.4;
+}
+.footer .references {
+  margin-top: 24px;
+}
+.footer .image-sources {
+  margin-top: 24px;
+}
+.footer .placeholder {
+  display: flex;
+  gap: 8px;
+}
+.footer .placeholder .blob {
+  width: 24px;
+  height: 24px;
+  background-color: #ddd;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+}
+.speculated {
+  height: 100px;
+  background-color: rgb(255, 255, 6);
+  width: calc(100% + 80px);
+  margin-left: -40px;
+  margin-right: -40px;
+}
+.modal-overlay .tooltip {
+  position: fixed; 
+  pointer-events: none;
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  display: none;
+  z-index: 200;
+}
