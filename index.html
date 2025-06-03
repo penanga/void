@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta 
+    name="viewport" 
+    content="width=device-width, initial-scale=1.0" 
+  />
+  <title>VOID VIS PROTOYPE</title>
+  <link rel="stylesheet" href="https://use.typekit.net/upd2ouj.css">
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+  />
+  <!-- link to the automatically compiled CSS (compiled from the SCSS) -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/modal.css" />
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings:
+        'FILL' 0,
+        'wght' 900,
+        'GRAD' 0,
+        'opsz' 20;
+      vertical-align: middle; /* optional: to align with your text */
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+</head>
+<body>
+  <img src="assets/images/void.svg" class="void-logo" alt="Void logo" />
+  <span id="info-button" class="material-symbols-outlined">info</span>
+  <div class="colour-background"></div>
+  <div class="background"></div>
+  <div class="background-parallax"></div>
+  <div class="vignette-overlay"></div>
+  <div class="viewport">
+    <div class="scene3D-container">
+      <div class="scene3D">
+        <!-- static body rings go here -->
+        <!-- object divs get placed here -->
+      </div>
+    </div>
+
+    <!-- line distance connectors generation -->
+    <svg
+      class="connectors"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 800 600"
+    ></svg>
+  </div>
+
+  <!-- Distortion Graph -->
+  <div id="distortion-graph">
+    <svg id="distortion-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+
+  <!-- 1b) Your popup template -->
+  <template id="object-popup-template">
+    <div class="container">
+      <button class="close-btn" aria-label="Close">×</button>
+      <!-- 1. Header -->
+      <header class="header">
+        <div class="headline">
+          <div class="title">[name]</div>
+          <div class="date">[launch_year]</div>
+        </div>
+        <div class="divider"></div>
+        <div class="info">
+          <div class="block">
+            <span class="label">Current Location</span>
+            <span class="value">[current]</span>
+          </div>
+          <div class="block">
+            <span class="label">Distance from Earth</span>
+            <span class="value">[proxy]</span>
+          </div>
+        </div>
+      </header>
+      <div class="divider-horizontal"></div>
+      <!-- …the rest of your template as-is… -->
+
+      <!-- 2. Facts -->
+      <div class="facts">
+        <div class="fact">
+          <span class="label">Mission</span>
+          <span class="value">[mission]</span>
+        </div>
+        <div class="fact">
+          <span class="label">Launch Date</span>
+          <span class="value">[launch_date_utc]</span>
+        </div>
+        <div class="fact">
+          <span class="label">Launched by</span>
+          <span class="value">[origin]</span>
+        </div>
+        <div class="fact">
+          <span class="label">Funding Model</span>
+          <span class="value">[fund_model]</span>
+        </div>
+      </div>
+      <div class="divider-horizontal"></div>
+    
+      <!-- 3. Object Description -->
+      <section class="object-description">
+          <div class="spacer"></div>
+          <div class="divider"></div>
+          <div class="text-content">
+              <span class="label">Object Description</span>
+              <p class="text">
+                [description_md]
+              </p>
+          </div>
+      </section>
+    
+      <!-- 4. Visual + Caption -->
+      <div class="visual"></div>
+      <div class="caption">Caption</div>
+    
+      <!-- 5. Story Section -->
+      <article class="story">
+        <h2 class="story-title">[story_title]</h2>
+        <div class="story-content">
+          <div class="quote">
+            [quote]
+            <span class="source">[quote_source]</span>
+          </div>
+          <p>
+            [personal_story]
+          </p>
+        </div>
+      </article>
+      <div class="divider-horizontal"></div>
+    
+      <!-- 6. Footer Metadata -->
+      <footer class="footer">
+        <div class="references">
+          <span class="label">References</span>
+          <div class="placeholder">
+            <div class="blob"></div>
+            <div class="blob"></div>
+          </div>
+        </div>
+        <div class="image-sources">
+          <span class="label">Image Sources</span>
+          <div class="placeholder">
+            <div class="blob"></div>
+            <div class="blob"></div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="notes">
+          <span class="label">Notes</span>
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut 
+            laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation 
+            ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+          </p>
+        </div>
+      </footer>
+
+
+    </div>
+  </template>
+
+  <!-- 1a) Modal container -->
+  <div id="object-modal" class="modal-overlay hidden">
+    <div class="popup-content"></div>
+    <div class="tooltip"></div>
+  </div>
+
+  <div id="distortion-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <button id="modal-close">×</button>
+
+      <!-- add your heading + paragraph here: -->
+      <h2 class="distortion-title">What Is the Distortion Zone?</h2>
+      <p class="distortion-explanation">
+        When you get within the first few percent of “proximity to Earth,”
+        the visual scale no longer maps linearly. In this zone, small changes
+        in actual distance produce much larger changes in perceived distance.
+        Below is a quick plot of how we eased out the curve to keep nearby
+        satellites visible while still showing the far‐away ones.
+      </p>
+
+      <div id="popup-distortion-graph">
+        <svg id="popup-distortion-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="info-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <button id="info-modal-close">×</button>
+      <h2 class="distortion-title">Something About VOID</h2>
+      <p class="distortion-explanation">
+        Here you can put any text or links you’d like to show
+        when the user clicks the top-right “info” icon.
+      </p>
+      <!-- (Optional) put any extra HTML here -->
+    </div>
+  </div>
+
+
+
+  <!-- link to main js file -->
+  <script src="js/main.js"></script>
+</body>
+</html>
