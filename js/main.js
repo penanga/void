@@ -120,7 +120,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   // set to `false` to load from data/distances.json instead.
   const USE_LIVE_DISTANCES = false;
 
-  const SCROLL_OFFSET = -190;  // “shift” everything 50px toward Earth
+  const SCROLL_OFFSET = -175;  // “shift” everything 50px toward Earth
 
   // ─── (A) “flip” toggle ───
   // Set this to true if you want scrollY=0 → camera at Earth (Z=0),
