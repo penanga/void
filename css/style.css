@@ -9,7 +9,7 @@
   --cameraSpeed: 150; /* Z-spacing multiplier */
   --cameraZ: 0; /* Updated on scroll */
   --viewportHeight: 0; /* Computed via JS */
-  --ring-diameter: 500px; /* Default static ring diameter */
+  --ring-diameter: 600px; /* Default static ring diameter */
   --ring-thickness: 40px; /* Ring border thickness */
 }
 
