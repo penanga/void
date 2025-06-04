@@ -9,7 +9,7 @@
   --cameraSpeed: 150; /* Z-spacing multiplier */
   --cameraZ: 0; /* Updated on scroll */
   --viewportHeight: 0; /* Computed via JS */
-  --ring-diameter: 500px; /* Default static ring diameter */
+  --ring-diameter: 80vmin; /* Default static ring diameter */
   --ring-thickness: 40px; /* Ring border thickness */
 }
 
@@ -88,6 +88,7 @@ body {
   left: 50%;
   /* Use --depth custom property (in px) for Z position; default 0 */
   transform: translate(-50%, -50%) translateZ(calc(var(--depth, 0) * 1px));
+  background-color: rgb(9, 8, 15);
 }
 
 /* Dynamic rings & objects remain unchanged */
