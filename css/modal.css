@@ -118,7 +118,7 @@
     margin-bottom: 30px;
 }
 .object-description .spacer {
-  flex: 0 0 200px;            /* give it whatever “negative” width you want */
+  flex: 0 0 400px;            /* give it whatever “negative” width you want */
 }
 .object-description .divider {
   flex: 0 0 1px;
