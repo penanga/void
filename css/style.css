@@ -192,6 +192,7 @@ body {
   overflow: visible;
   padding: 20px;
   box-sizing: border-box;
+  max-width: 800px;
 }
 
 #distortion-modal #modal-close {
