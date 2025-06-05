@@ -145,6 +145,10 @@ window.addEventListener('DOMContentLoaded', async () => {
     '999': { name: 'Pluto', type: 1, objectType: 'Dwarf Planet'},
     '-31': { name: 'Voyager 1', type: 2, objectType: 'Space Probe'},
     '-32': { name: 'Voyager 2', type: 2, objectType: 'Space Probe'},
+    '10': { name: 'Sun', type: 1, objectType: 'Star'},
+    '-23': { name: 'Pioneer 10', type: 2, objectType: 'Space Probe'},
+    '-24': { name: 'Pioneer 11', type: 2, objectType: 'Space Probe'},
+    '-49': { name: 'Lucy', type: 2, objectType: 'Space Probe'},
   };
 
 
@@ -893,8 +897,28 @@ window.addEventListener('DOMContentLoaded', async () => {
   document.querySelectorAll('.object').forEach(obj => {
     obj.addEventListener('click', () => {
       const row = rows[obj.dataset.rowIdx];
-      // 1) Fill the popup-content
-      popupContent.innerHTML = renderTemplate(tpl, row);
+
+      // 1) Find exactly the “hero” record in images_001.csv (role === 'h')
+      const heroRow = parsedImgs.data.find(r =>
+        r.id && r.id.trim() === row.id.trim() &&
+        r.role && r.role.trim() === 'h'
+      );
+
+      // 2) Compute captionText: use caption if non-empty, otherwise alt_text
+      let captionText = '';
+      if (heroRow) {
+        // trim() in case there’s extra whitespace
+        const cap = (heroRow.caption || '').trim();
+        const alt = (heroRow.alt_text || '').trim();
+        captionText = cap.length ? cap : alt;
+      }
+
+      // 3) Run renderTemplate, then substitute [caption] before inserting
+      let html = renderTemplate(tpl, row);
+      html = html.replace(/\[caption\]/g, captionText);
+
+      popupContent.innerHTML = html;
+
       // 2a) Inject hero image
       const visualDiv = popupContent.querySelector('.visual');
       visualDiv.innerHTML = ''; // clear the placeholder
@@ -944,10 +968,7 @@ window.addEventListener('DOMContentLoaded', async () => {
           a.addEventListener('mousemove', onBlobMove);
           a.addEventListener('mouseleave', onBlobLeave);
         });
-      // 4) Show the modal
-      modalOverlay.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-      modalOverlay.scrollTop = 0;
+
       // 5) Close-button inside your popup
       popupContent.querySelector('.close-btn')
         .addEventListener('click', () => {
@@ -955,7 +976,61 @@ window.addEventListener('DOMContentLoaded', async () => {
           popupContent.innerHTML = '';
           document.body.style.overflow = '';
         });
+
+      // 2b) Build your “Image Sources” blob (only the single 'hero' entry)
+      const imgSrcContainer = popupContent.querySelector('.image-sources .placeholder');
+      if (imgSrcContainer) {
+        imgSrcContainer.innerHTML = '';
+      
+        // Find exactly the “hero” row (role='h') for this object ID:
+        const heroRow = parsedImgs.data.find(r =>
+          r.id && r.id.trim() === row.id.trim() &&
+          r.role && r.role.trim() === 'h' &&
+          r.credit && r.credit.trim()
+        );
+      
+        if (heroRow) {
+          const u = heroRow.credit.trim();
+          const a = document.createElement('a');
+          a.href = u;
+          a.target = '_blank';
+          a.rel = 'noopener';
+        
+          // Create one “blob” div with favicon background:
+          const blob = document.createElement('div');
+          blob.classList.add('blob');
+          try {
+            const hostname = new URL(u).hostname;
+            const favUrl = `https://www.google.com/s2/favicons?domain=${hostname}&sz=64`;
+            Object.assign(blob.style, {
+              backgroundImage: `url("${favUrl}")`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+              backgroundSize: 'contain',
+              backgroundColor: 'transparent'
+            });
+          } catch {
+            console.warn('Invalid URL for favicon:', u);
+          }
+        
+          a.appendChild(blob);
+          imgSrcContainer.appendChild(a);
+        
+          // Tooltip handlers:
+          a.addEventListener('mouseenter', onBlobEnter);
+          a.addEventListener('mousemove',  onBlobMove);
+          a.addEventListener('mouseleave', onBlobLeave);
+        }
+      }
+
+      // 4) Show the modal
+      modalOverlay.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      modalOverlay.scrollTop = 0;
+
     });
+
+    
   });
 
 
