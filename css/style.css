@@ -9,7 +9,7 @@
   --cameraSpeed: 150; /* Z-spacing multiplier */
   --cameraZ: 0; /* Updated on scroll */
   --viewportHeight: 0; /* Computed via JS */
-  --ring-diameter: 600px; /* Default static ring diameter */
+  --ring-diameter: 500px; /* Default static ring diameter */
   --ring-thickness: 40px; /* Ring border thickness */
 }
 
@@ -109,6 +109,7 @@ body {
   opacity: 1;
   box-sizing: border-box;
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .object {
@@ -119,6 +120,8 @@ body {
   background-color: rgb(248, 248, 248);
   box-sizing: border-box;
   z-index: 0px;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 #distortion-graph {
@@ -183,7 +186,7 @@ body {
   display: none;
 }
 
-#distortion-modal .modal-content {
+.modal-content {
   background: rgb(255, 255, 255);
   position: absolute;
   top: 50%;
@@ -196,6 +199,19 @@ body {
 }
 
 #distortion-modal #modal-close {
+  position: absolute;
+  top: 35px;
+  right: 35px;
+  background: none;
+  border: none;
+  font-size: 1.7rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #666;
+  padding: 4px;
+}
+
+#info-modal-close {
   position: absolute;
   top: 35px;
   right: 35px;
@@ -223,7 +239,7 @@ body {
   height: 100%;
 }
 
-#distortion-modal .modal-content .distortion-title {
+.modal-content .distortion-title {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 8px;
@@ -231,7 +247,7 @@ body {
 }
 
 /* style the paragraph */
-#distortion-modal .modal-content .distortion-explanation {
+.modal-content .distortion-explanation {
   font-size: 1rem;
   line-height: 1.4;
   margin-bottom: 16px;
