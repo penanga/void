@@ -115,7 +115,7 @@
     
       <!-- 4. Visual + Caption -->
       <div class="visual"></div>
-      <div class="caption">Caption</div>
+      <div class="caption">[caption]</div>
     
       <!-- 5. Story Section -->
       <article class="story">
@@ -148,15 +148,6 @@
             <div class="blob"></div>
           </div>
         </div>
-        <div class="divider"></div>
-        <div class="notes">
-          <span class="label">Notes</span>
-          <p>
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut 
-            laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation 
-            ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-          </p>
-        </div>
       </footer>
 
 
@@ -178,9 +169,8 @@
       <p class="distortion-explanation">
         When you get within the first few percent of “proximity to Earth,”
         the visual scale no longer maps linearly. In this zone, small changes
-        in actual distance produce much larger changes in perceived distance.
-        Below is a quick plot of how we eased out the curve to keep nearby
-        satellites visible while still showing the far‐away ones.
+        in actual distance produce much larger changes in perceived distance. This is to prevent planets and spacecraft from sitting too close to one another in the visualisation.
+        The graph below demonstrates the amount of distortion applied at each point within this zone (left is closest to Earth). The rest of the scale is unaltered.
       </p>
 
       <div id="popup-distortion-graph">
@@ -193,10 +183,29 @@
   <div id="info-modal" class="modal-overlay hidden">
     <div class="modal-content">
       <button id="info-modal-close">×</button>
-      <h2 class="distortion-title">Something About VOID</h2>
+      <h2 class="distortion-title">Project Notes</h2>
       <p class="distortion-explanation">
-        Here you can put any text or links you’d like to show
-        when the user clicks the top-right “info” icon.
+        Method<br>
+        <br>
+        All object entries, descriptions, and supporting notes are the result of my own research,
+        compiled from publicly available material. Source links have been included wherever possible.<br>
+        <br>
+        Limitations<br>
+        <br>
+        As some objects are poorly recorded, some details may be incomplete or disputed. I have made every reasonable
+        effort to verify facts, but inaccuracies may remain. The catalogue is not exhaustive; gaps reflect both poor
+        documentation and the language barriers of the sources available to me.<br>
+        <br>
+        Distance Data<br>
+        <br>
+        All distance figures in the visualisation represent the real-time separation between Earth and each listed spacecraft or
+        celestial body. Values are retrieved every 24 hours from NASA’s HORIZONS ephemeris API.<br>
+        <br>
+        Respect and Remembrance<br>
+        <br>
+        The inclusion of and references to human remains and memorials are solely intended to illustrate the deeply personal dimension
+        to humanity’s relationship with space. Their inclusion is made with the utmost respect and is not meant to diminish the 
+        dignity of the individuals commemorated.
       </p>
       <!-- (Optional) put any extra HTML here -->
     </div>
